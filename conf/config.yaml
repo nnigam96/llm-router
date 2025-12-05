@@ -1,0 +1,15 @@
+# Main configuration file for LLM-Router
+# This file is managed by Hydra
+
+defaults:
+  - router: hybrid
+  - experts: professor
+
+app:
+  name: llm-router
+  version: 0.1.0
+
+server:
+  host: localhost
+  port: 8000
+

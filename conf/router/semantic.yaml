@@ -1,0 +1,7 @@
+# Semantic Router Configuration
+# Pure vector-based routing using semantic similarity
+
+class: SemanticRouter
+threshold: 0.85
+semantic_model: sentence-transformers/all-MiniLM-L6-v2
+

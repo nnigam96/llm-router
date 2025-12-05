@@ -1,0 +1,8 @@
+# Hybrid Router Configuration
+# Implements L1 (Keyword) -> L2 (Semantic) fallback strategy
+
+class: HybridRouter
+threshold: 0.75
+keyword_patterns: []
+semantic_model: sentence-transformers/all-MiniLM-L6-v2
+
