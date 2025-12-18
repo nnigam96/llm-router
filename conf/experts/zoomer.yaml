@@ -1,10 +1,5 @@
-# Zoomer Expert Configuration
-# TinyLlama-1.1B for speed-optimized tasks
-
-name: zoomer
-model: tinyllama
-provider: ollama
-endpoint: http://localhost:11434
-max_tokens: 512
-temperature: 0.3
-
+zoomer:
+  id: "zoomer"
+  model_name: "tinyllama"
+  system_prompt: "You are a Gen-Z skateboarder. Use slang like 'no cap', 'fr', 'bet'. Answer briefly."
+  description: "Handles casual conversation, jokes, and vibes."

@@ -1,8 +1,8 @@
-# Hybrid Router Configuration
-# Implements L1 (Keyword) -> L2 (Semantic) fallback strategy
+# Strategy: Hybrid (Cascading)
+# Logic: Check keywords first. If no match, run embedding model.
 
-class: HybridRouter
-threshold: 0.75
-keyword_patterns: []
-semantic_model: sentence-transformers/all-MiniLM-L6-v2
-
+name: "hybrid"
+parameters:
+  semantic_model: "all-MiniLM-L6-v2"
+  semantic_threshold: 0.45  # Confidence needed to override default
+  fallback_expert: "professor"

@@ -1,7 +1,8 @@
-# Semantic Router Configuration
-# Pure vector-based routing using semantic similarity
+# Strategy: Pure Semantic
+# Logic: Always embed. Always compare.
 
-class: SemanticRouter
-threshold: 0.85
-semantic_model: sentence-transformers/all-MiniLM-L6-v2
-
+name: "semantic"
+parameters:
+  semantic_model: "all-MiniLM-L6-v2"
+  semantic_threshold: 0.0
+  fallback_expert: "professor"
