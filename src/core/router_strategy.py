@@ -5,7 +5,7 @@ Router strategy implementations (Hybrid, Semantic, Keyword)
 import time
 import re
 import numpy as np
-from typing import Tuple, List, Dict
+from typing import Tuple, List, Dict, Optional
 from sentence_transformers import SentenceTransformer, util
 from src.core.protocols import RoutingStrategy
 
@@ -13,33 +13,52 @@ class KeywordRoutingStrategy(RoutingStrategy):
     """
     L1 Strategy: Deterministic Regex Matching.
     Extremely low latency (<1ms).
+    Patterns can be loaded from configuration files for easy customization.
     """
-    def __init__(self):
-        # In a real app, these patterns might load from a YAML file
-        self.professor_patterns = re.compile(
-            r'\b(def|class|import|math|derivative|quantum|code|debug|function|api|compiler)\b', 
-            re.IGNORECASE
-        )
-        self.zoomer_patterns = re.compile(
-            r'\b(yo|lol|vibes|cap|bet|finna|bruh|meme|joke|lit|fam)\b', 
-            re.IGNORECASE
-        )
+    def __init__(self, patterns: Optional[Dict[str, List[str]]] = None):
+        """
+        Initialize the keyword routing strategy.
+
+        Args:
+            patterns: Optional dictionary mapping expert IDs to lists of regex patterns.
+                     If None, uses default patterns.
+        """
+        # Default patterns (used if no config provided)
+        default_patterns = {
+            "professor": [
+                r'\bdef\b', r'\bclass\b', r'\bimport\b', r'\bmath\b',
+                r'\bderivative\b', r'\bquantum\b', r'\bcode\b', r'\bdebug\b',
+                r'\bfunction\b', r'\bapi\b', r'\bcompiler\b'
+            ],
+            "zoomer": [
+                r'\byo\b', r'\blol\b', r'\bvibes\b', r'\bcap\b',
+                r'\bbet\b', r'\bfinna\b', r'\bbruh\b', r'\bmeme\b',
+                r'\bjoke\b', r'\blit\b', r'\bfam\b'
+            ]
+        }
+
+        # Use provided patterns or defaults
+        patterns = patterns or default_patterns
+
+        # Compile patterns into regex objects
+        self.patterns = {}
+        for expert, pattern_list in patterns.items():
+            # Combine all patterns for this expert into one regex
+            combined_pattern = '|'.join(pattern_list)
+            self.patterns[expert] = re.compile(combined_pattern, re.IGNORECASE)
 
     def route(self, query: str) -> Tuple[str, float, float]:
         start_time = time.time()
-        
-        # Priority 1: Check Professor Terms
-        if self.professor_patterns.search(query):
-            latency = (time.time() - start_time) * 1000
-            return "professor", 1.0, latency
-            
-        # Priority 2: Check Zoomer Terms
-        if self.zoomer_patterns.search(query):
-            latency = (time.time() - start_time) * 1000
-            return "zoomer", 1.0, latency
-            
+
+        # Check each expert's patterns
+        # Priority order is determined by dictionary order (Python 3.7+ maintains insertion order)
+        for expert, pattern in self.patterns.items():
+            if pattern.search(query):
+                latency = (time.time() - start_time) * 1000
+                return expert, 1.0, latency
+
+        # No match found
         latency = (time.time() - start_time) * 1000
-        # Return None or a default to indicate "No Match" to the Hybrid Router
         return "nomatch", 0.0, latency
 
 

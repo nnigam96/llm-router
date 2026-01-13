@@ -8,10 +8,30 @@ version = "0.1.0"
 description = "High-Performance Semantic Orchestration for Distributed LLM Systems"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "pydantic>=2.5.0",
+    "pydantic-settings>=2.1.0",
+    "requests>=2.31.0",
+    "httpx>=0.26.0",
+    "aiofiles>=23.0.0",
+    "sentence-transformers>=2.3.0",
+    "hydra-core>=1.3.0",
+    "numpy>=1.24.0",
+    "pandas>=2.0.0",
+    "torch>=2.1.0",
+]
 
 [project.optional-dependencies]
-dev = []
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "httpx>=0.26.0",
+    "black>=24.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.8.0",
+]
 
 [tool.setuptools.packages.find]
 where = ["."]

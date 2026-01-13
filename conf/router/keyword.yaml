@@ -1,0 +1,40 @@
+# Strategy: Keyword (Deterministic Pattern Matching)
+# Logic: Match specific keywords/patterns to route to experts
+
+name: "keyword"
+parameters:
+  patterns:
+    professor:
+      - "\\bdef\\b"
+      - "\\bclass\\b"
+      - "\\bimport\\b"
+      - "\\bmath\\b"
+      - "\\bderivative\\b"
+      - "\\bquantum\\b"
+      - "\\bcode\\b"
+      - "\\bdebug\\b"
+      - "\\bfunction\\b"
+      - "\\bapi\\b"
+      - "\\bcompiler\\b"
+      - "\\balgorithm\\b"
+      - "\\barray\\b"
+      - "\\bdatabase\\b"
+      - "\\bvariable\\b"
+      - "\\bpython\\b"
+      - "\\bjava\\b"
+      - "\\btypescript\\b"
+    zoomer:
+      - "\\byo\\b"
+      - "\\blol\\b"
+      - "\\bvibes\\b"
+      - "\\bcap\\b"
+      - "\\bbet\\b"
+      - "\\bfinna\\b"
+      - "\\bbruh\\b"
+      - "\\bmeme\\b"
+      - "\\bjoke\\b"
+      - "\\blit\\b"
+      - "\\bfam\\b"
+      - "\\bfr\\b"
+      - "\\bslay\\b"
+      - "\\bgoat\\b"
